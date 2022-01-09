@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="./todo.css">
+    <script src="./todo.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1>TO DO LIST</h1>
+        <input type="text" id="inputValue">
+        <button onclick="enterValue()">nhap</button>
+    </div>
+    <ul id="list"></ul>
+    
+</body>
+<Script>
+    var length = 0;
+    document.getElementById('inputValue').addEventListener('keyup', function(){
+        if (event.keyCode === 13) {enterValue()}
+    })
+    function enterValue(){
+        var x = document.getElementById('inputValue').value;
+        if (x == "") {
+            window.alert('Hãy nhập lại')
+        } else {
+            var li = document.createElement('li');
+            var ul = document.getElementById('list');
+            
+            li.append(x);
+            li.setAttribute('id', length.toString());
+            var del = document.createElement('button');
+            del.innerHTML = "x";
+            del.addEventListener('click', function() {
+                this.parentElement.remove()
+            });
+            var edit = document.createElement('button');
+            edit.innerHTML = "Sửa";
+            edit.addEventListener('click', function() {
+                var oldElement = this.parentElement;
+                var editinput = document.createElement('input');
+                editinput.value = this.parentElement.firstChild.data;
+                var editbutton = document.createElement('button');
+                editbutton.append('Sửa');
+                var editdiv = document.createElement('div');
+                editdiv.append(editinput,editbutton);
+                editdiv.setAttribute('class', 'editdiv');
+                this.parentElement.append(editdiv);
+                edit.style.display = 'none';
+                editbutton.addEventListener('click', function(){
+                    let newElement = editinput.value;
+                    if (newElement == "") {window.alert('Hãy nhập lại')} else {
+                        oldElement.firstChild.data = newElement
+                        editdiv.remove();
+                        edit.style.display = 'none';
+                    }
+                });
+                editinput.addEventListener('keyup', function() {
+                    if (event.keyCode ===13) {editbutton.click()}
+                })
+            });
+            length++;
+            console.log(li);
+            li.append(edit,del);
+            ul.prepend(li);
+            document.getElementById('inputValue').value = '';
+        }
+    }
+</Script>
+</html>

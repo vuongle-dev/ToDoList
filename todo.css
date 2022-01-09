@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+}
+.header {
+    padding: 5%;
+    background-color: red;
+    text-align: center;
+}
+.header input {
+    padding: 5px;
+}
+.header button {
+    padding: 5px;
+    background-color: gray;
+}
+
+h1 {
+    color: white;
+}
+p {
+    display: inline;
+}
+
+
+#edit {
+    display: none;
+}

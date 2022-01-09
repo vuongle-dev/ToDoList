@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="./todo.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <h1>TO DO LIST</h1>
+        <input type="text" id="inputValue">
+        <button id="enter">nhap</button>
+    </div>
+    <ul id="list"></ul>
+
+</body>
+<Script>
+    $(document).ready(function () {
+        var length = 0;
+
+        $('#inputValue').keyup(function (e) {
+            if (e.which == 13) { enterValue() }
+        });
+        // $('#enter').click(enterValue()); 
+        $('#enter').click(function(){
+            enterValue();
+        });
+        function enterValue() {
+            var x = $('#inputValue').val();
+            if (x == "") {
+                window.alert('Hãy nhập lại')
+            } else {
+                var li = $('<li></li>').html('<p>' + x + '</p>');
+                li.attr('id', length);
+                var del = $('<button></buttton').text('x');
+                del.click(function () {
+                    del.parent().remove();
+                });
+                var edit = $('<button></buttton').text('Sửa');
+                edit.click(function () {
+                    var editinput = $('<input></input>');
+                    editinput.val(edit.parent().contents().first().text());
+                    editinput.keyup(function () {
+                        if (event.keyCode === 13) { editbutton.click() }
+                    })
+                    var editbutton = $('<button></button>').text('Sửa')
+                    editbutton.click(function () {
+                        let newElement = editinput.val();
+                        if (newElement == "") { window.alert('Hãy nhập lại') } else {
+                            edit.parent().contents().first().text(newElement);
+                            editdiv.remove();
+                            edit.css('display', 'inline');
+                        }
+                    });
+                    var editdiv = $('<div></div').append(editinput, editbutton)
+                    editdiv.attr('class', 'editdiv');
+                    edit.parent().append(editdiv)
+                    edit.css('display', 'none');
+
+                });
+                length++;
+                console.log(li);
+                li.append(edit, del);
+                $('#list').prepend(li);
+                $('#inputValue').val('');
+            }
+        }
+    });
+
+</Script>
+
+</html>
